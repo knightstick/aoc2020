@@ -4,23 +4,21 @@ module Aoc2020
   module DayTwo
     class << self
       def part_one(input)
-        policies_and_passwords(input).map do |policy, password|
-          PasswordValidator.new(policy: policy, password: password)
-        end.count(&:valid?)
+        policies_and_passwords(input).count do |policy, password|
+          PasswordValidator.new(policy: policy, password: password).valid?
+        end
       end
 
       def part_two(input)
-        policies_and_passwords(input).map do |policy, password|
-          PasswordValidatorV2.new(policy: policy, password: password)
-        end.count(&:valid?)
+        policies_and_passwords(input).count do |policy, password|
+          PasswordValidatorV2.new(policy: policy, password: password).valid?
+        end
       end
 
       private
 
       def policies_and_passwords(input)
-        input.chomp.split("\n").map do |line|
-          line.split(': ')
-        end
+        input.chomp.split("\n").map { |line| line.split(': ') }
       end
     end
 
@@ -78,8 +76,7 @@ module Aoc2020
       end
 
       def valid?(password)
-        occurrences = password.chars.count { |elem| elem == char }
-        (min..max).cover?(occurrences)
+        (min..max).cover?(password.count(char))
       end
 
       private
@@ -107,15 +104,11 @@ module Aoc2020
                   :char
 
       def first?(password)
-        in_position?(first, password)
+        password[first] == char
       end
 
       def second?(password)
-        in_position?(second, password)
-      end
-
-      def in_position?(position, password)
-        password[position] == char
+        password[second] == char
       end
     end
   end
