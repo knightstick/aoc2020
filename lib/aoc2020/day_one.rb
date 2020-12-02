@@ -20,10 +20,37 @@ module Aoc2020
         numbers(input).combination(take).find { |list| list.sum == total }&.reduce(:*)
       end
 
+      def party_one(input)
+        find_two(input.chomp.split)
+      end
+
+      def party_two(input)
+        find_three(input.chomp.split)
+      end
+
       private
 
       def numbers(input)
         input.chomp.split("\n").map(&method(:Integer))
+      end
+
+      def find_two(strings, target = 2020)
+        strings.lazy.with_index.map do |string, index|
+          number = Integer(string)
+          inner_target = target - number
+          second = strings[index + 1..].lazy.map(&method(:Integer)).find { |elem| elem == inner_target }
+
+          number * second if second
+        end.find(&:itself)
+      end
+
+      def find_three(strings, target = 2020)
+        strings.lazy.with_index.map do |string, index|
+          number = Integer(string)
+          inner_target = target - number
+          two_product = find_two(strings[index + 1..], inner_target)
+          two_product * number if two_product
+        end.find(&:itself)
       end
     end
   end
