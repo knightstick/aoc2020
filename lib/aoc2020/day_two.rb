@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'scanf'
+
 module Aoc2020
   module DayTwo
     class << self
@@ -12,6 +14,22 @@ module Aoc2020
       def part_two(input)
         policies_and_passwords(input).count do |policy, password|
           PasswordValidatorV2.new(policy: policy, password: password).valid?
+        end
+      end
+
+      def party_one(input)
+        input.chomp.split("\n").count do |line|
+          min, max, char, password = line.scanf('%d-%d %c: %s')
+          policy = Policy.new(min: min, max: max, char: char)
+          policy.valid?(password)
+        end
+      end
+
+      def party_two(input)
+        input.chomp.split("\n").count do |line|
+          first, second, char, password = line.scanf('%d-%d %c: %s')
+          policy = PolicyV2.new(first: first - 1, second: second - 1, char: char)
+          policy.valid?(password)
         end
       end
 
