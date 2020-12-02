@@ -34,4 +34,20 @@ RSpec.describe Aoc2020::DayTwo do
       specify { expect(validator).not_to be_valid }
     end
   end
+
+  describe 'PolicyV2' do
+    let(:policy) { described_class::PolicyV2.new(first: 0, second: 2, char: 'a') }
+
+    specify 'just right' do
+      expect(policy.valid?('abb')).to eq true
+    end
+
+    specify 'both' do
+      expect(policy.valid?('aba')).to eq false
+    end
+
+    specify 'neither' do
+      expect(policy.valid?('aba')).to eq false
+    end
+  end
 end
