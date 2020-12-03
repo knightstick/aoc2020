@@ -41,36 +41,43 @@ RSpec.describe Aoc2020::DayThree do
     describe 'next_position' do
       let(:grid) { described_class::Grid.from_string("...\n...\n...") }
 
-      specify do
-        expect(grid.next_position(x: 0, y: 0, x_diff: 1, y_diff: 0)).to eq({ x: 1, y: 0 })
+      def next_position(x:, y:, x_diff:, y_diff:)
+        grid.next_position(x: x, y: y, slope: OpenStruct.new(right: y_diff, down: x_diff))
       end
 
       specify do
-        expect(grid.next_position(x: 1, y: 0, x_diff: 1, y_diff: 0)).to eq({ x: 2, y: 0 })
+        expect(next_position(x: 0, y: 0, x_diff: 1, y_diff: 0)).to eq({ x: 1, y: 0 })
       end
 
       specify do
-        expect(grid.next_position(x: 0, y: 0, x_diff: 2, y_diff: 0)).to eq({ x: 2, y: 0 })
+        expect(next_position(x: 1, y: 0, x_diff: 1, y_diff: 0)).to eq({ x: 2, y: 0 })
       end
 
       specify do
-        expect(grid.next_position(x: 0, y: 0, x_diff: 0, y_diff: 2)).to eq({ x: 0, y: 2 })
+        expect(next_position(x: 0, y: 0, x_diff: 2, y_diff: 0)).to eq({ x: 2, y: 0 })
       end
 
       specify do
-        expect(grid.next_position(x: 0, y: 0, x_diff: 0, y_diff: 3)).to eq({ x: 0, y: 0 })
+        expect(next_position(x: 0, y: 0, x_diff: 0, y_diff: 2)).to eq({ x: 0, y: 2 })
       end
 
       specify do
-        expect(grid.next_position(x: 0, y: 0, x_diff: 3, y_diff: 0)).to be_nil
+        expect(next_position(x: 0, y: 0, x_diff: 0, y_diff: 3)).to eq({ x: 0, y: 0 })
+      end
+
+      specify do
+        expect(next_position(x: 0, y: 0, x_diff: 3, y_diff: 0)).to be_nil
       end
 
       context 'another' do
         let(:grid) { described_class::Grid.from_string("....\n...#\n....") }
-        # let(:toboggan_ride) { described_class::TobogganRide.new(grid: grid) }
 
         specify do
-          expect(grid.next_position(x: 1, y: 3, x_diff: 1, y_diff: 3)).to eq({x: 2, y: 2})
+          expect(next_position(x: 1, y: 3, x_diff: 1, y_diff: 3)).to eq({ x: 2, y: 2 })
+        end
+
+        specify do
+          expect(grid.next_position(x: 0, y: 0, slope: OpenStruct.new(down: 1, right: 3))).to eq({ x: 1, y: 3 })
         end
       end
     end

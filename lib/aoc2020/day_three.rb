@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'ostruct'
+
 module Aoc2020
   class DayThree
     class << self
@@ -7,6 +9,21 @@ module Aoc2020
         grid = Grid.from_string(input)
         toboggan_ride = TobogganRide.new(grid: grid)
         toboggan_ride.number_of_trees
+      end
+
+      def part_two(input)
+        grid = Grid.from_string(input)
+        slopes = [
+          OpenStruct.new(right: 1, down: 1),
+          OpenStruct.new(right: 3, down: 1),
+          OpenStruct.new(right: 5, down: 1),
+          OpenStruct.new(right: 7, down: 1),
+          OpenStruct.new(right: 1, down: 2)
+        ]
+
+        slopes.map do |slope|
+          TobogganRide.new(grid: grid, slope: slope).number_of_trees
+        end.reduce(:*)
       end
     end
 
@@ -49,17 +66,14 @@ module Aoc2020
         coordinates.fetch(position)
       end
 
-      def in_bounds?(position)
-        coordinates.keys.include?(position)
-      end
+      def next_position(slope:, x:, y:)
+        new_x = x + slope.down
 
-      def next_position(x:, y:, x_diff:, y_diff:)
-        new_x = x + x_diff
         return unless new_x < height
 
         {
           x: new_x,
-          y: (y + y_diff) % width
+          y: (y + slope.right) % width
         }
       end
 
@@ -83,8 +97,9 @@ module Aoc2020
     end
 
     class TobogganRide
-      def initialize(grid:)
+      def initialize(grid:, slope: default_slope)
         @grid = grid
+        @slope = slope
       end
 
       def number_of_trees
@@ -93,10 +108,15 @@ module Aoc2020
 
       private
 
-      attr_reader :grid
+      attr_reader :grid,
+                  :slope
 
       def path
         @path ||= calculate_path
+      end
+
+      def default_slope
+        OpenStruct.new(right: 3, down: 1)
       end
 
       def calculate_path
@@ -107,7 +127,7 @@ module Aoc2020
 
         while position
           result.push(grid.at(position))
-          position = grid.next_position(x_diff: 1, y_diff: 3, **position)
+          position = grid.next_position(slope: slope, **position)
         end
 
         result
