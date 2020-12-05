@@ -15,7 +15,7 @@
     {
       "label": "run current day",
       "type": "shell",
-      "command": "./bin/day4 ",
+      "command": "./bin/day5 ",
       "group": {
         "kind": "build",
         "isDefault": true,
