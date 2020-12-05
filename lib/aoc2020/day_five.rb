@@ -14,6 +14,16 @@ module Aoc2020
         to_the_left + 1
       end
 
+      def party_one(input)
+        binaries(input).map { |b| b.to_i(2) }.max
+      end
+
+      def binaries(input)
+        input.chomp.split("\n").map do |seat|
+          seat.gsub('B', '1').gsub('F', '0').gsub('R', '1').gsub('L', '0')
+        end
+      end
+
       def seat_ids(input)
         input.chomp.split("\n").lazy.map do |seats|
           seat_number(seats)

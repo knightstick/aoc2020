@@ -3,5 +3,5 @@
 
 require_relative '../lib/aoc2020'
 
-puts Aoc2020::DayFive.part_one(File.read('./inputs/day5.txt'))
+puts Aoc2020::DayFive.party_one(File.read('./inputs/day5.txt'))
 puts Aoc2020::DayFive.part_two(File.read('./inputs/day5.txt'))
