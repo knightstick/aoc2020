@@ -27,6 +27,22 @@ module Aoc2020
         end.sum
       end
 
+      def partz_one(input)
+        input.chomp.split("\n\n").map do |lines|
+          lines.split("\n").reduce(Set.new) do |acc, line|
+            acc.union(Set.new(line.chars))
+          end.size
+        end.sum
+      end
+
+      def partz_two(input)
+        input.chomp.split("\n\n").map do |lines|
+          lines.split("\n").reduce(Set.new('a'..'z')) do |acc, line|
+            acc.intersection(Set.new(line.chars))
+          end.size
+        end.sum
+      end
+
       def anyone(group)
         group.gsub("\n", '').chars.sort.uniq.count
       end
