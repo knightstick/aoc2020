@@ -29,16 +29,22 @@ module Aoc2020
 
       def partz_one(input)
         input.chomp.split("\n\n").map do |lines|
-          lines.split("\n").reduce(Set.new) do |acc, line|
-            acc.union(Set.new(line.chars))
+          lines
+            .split("\n")
+            .lazy.map { |line| Set.new(line.chars) }
+            .reduce do |acc, set|
+            acc.union(set)
           end.size
         end.sum
       end
 
       def partz_two(input)
         input.chomp.split("\n\n").map do |lines|
-          lines.split("\n").reduce(Set.new('a'..'z')) do |acc, line|
-            acc.intersection(Set.new(line.chars))
+          lines
+            .split("\n")
+            .lazy.map { |line| Set.new(line.chars) }
+            .reduce do |acc, set|
+            acc.intersection(set)
           end.size
         end.sum
       end
