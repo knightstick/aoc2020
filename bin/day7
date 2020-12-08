@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require_relative '../lib/aoc2020'
+
+puts Aoc2020::DaySeven.part_one(File.read('./inputs/day7.txt'))
+puts Aoc2020::DaySeven.part_two(File.read('./inputs/day7.txt'))

@@ -6,6 +6,7 @@ require_relative 'aoc2020/day_three'
 require_relative 'aoc2020/day_four'
 require_relative 'aoc2020/day_five'
 require_relative 'aoc2020/day_six'
+require_relative 'aoc2020/day_seven'
 
 module Aoc2020
 end
