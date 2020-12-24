@@ -20,6 +20,7 @@ require_relative 'aoc2020/day_seventeen'
 require_relative 'aoc2020/day_twenty_one'
 require_relative 'aoc2020/day_twenty_two'
 require_relative 'aoc2020/day_twenty_three'
+require_relative 'aoc2020/day_twenty_four'
 
 module Aoc2020
 end
